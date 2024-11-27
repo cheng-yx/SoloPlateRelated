@@ -46,10 +46,32 @@ def elasticPlasticFiniteDeformation(R): #弹塑性有限变位理论
             0.390 * (R - 0.5) ** 2 - 0.911 * (R - 0.5) + 1.0,
             np.where(
                 case3,
-                (0.015/ (R - 0.8))  - 0.146 * R + 0.713,
+                (0.015/ (R - 0.8)) - 0.146 * R + 0.713,
                 np.nan  # Handling R values outside the given range
             )))
     return result
+
+
+def analysisScatter_and_fit_curve(color, label_points, label_fit):
+    # Data points for scatter
+    x_points = np.array([0.25, 0.5, 0.75, 1, 1.25, 1.5])
+    y_points = np.array([1.327690632, 0.939931009, 0.723741225, 0.604004176, 0.526395788, 0.468868918])
+
+    # Polynomial fitting (degree 3)
+    poly_coefficients = np.polyfit(x_points, y_points, deg=3)
+    poly_fit = np.poly1d(poly_coefficients)
+
+    # Generate fitted curve data
+    x_fit = np.linspace(min(x_points), max(x_points), 100)
+    y_fit = poly_fit(x_fit)
+
+    plt.plot(x_points, y_points, 'o', label=label_points, c=color)
+    # Plot fitted curve
+    plt.plot(x_fit, y_fit, '--', label=label_fit, c=color, alpha=0.7)
+
+    # Return the scatter points and fitted curve data
+    return x_points, y_points, x_fit, y_fit
+
 
 # 创建x轴的数据范围
 x = np.linspace(0, 2, 1000)
@@ -67,13 +89,18 @@ plt.plot(R, euler_curve(R), label='Euler Curve (1744)', c="red")
 plt.plot(R, m_curve(R), label='Fukumoto et. al. M (1984)', c="black")
 plt.plot(R, m_2s_curve(R), label='Fukumoto et. al. M-2S (1984)', c="gray")
 plt.plot(R, Nara(R), label='Nara et. al(1988)', c="magenta")
-plt.plot(R, road_bridge_curve(R), label='Specifications for highway bridges (2002)', c="blue")
+plt.plot(R, road_bridge_curve(R), label='Specifications for Highway Bridges (2002)', c="blue")
 plt.plot(R, elasticPlasticFiniteDeformation(R), label='Buckling Design Guidelines(2005)', c="green")
+analysisScatter_and_fit_curve(
+    color="orange",
+    label_points="Analytical Results",
+    label_fit="Fitted Curve (Analytical Results)")
 
 # 添加图例
 plt.xlim(0, 2.0)
-plt.ylim(0, 2.5)
-plt.legend(facecolor='white', edgecolor='black', framealpha=1, fancybox=False)
+plt.ylim(0, 2.65)
+plt.legend(facecolor='white', edgecolor='black', framealpha=1, fancybox=False,
+    prop={'size': 10})
 
 # 添加标题和轴标签
 plt.title(' ')
@@ -83,7 +110,7 @@ plt.ylabel('Sigma cr/Sigma y')
 # 显示图形
 plt.grid(True)
 plt.xticks(np.arange(0, 2.1, 0.5))
-plt.yticks(np.arange(0, 2.7, 0.2))
+plt.yticks(np.arange(0, 2.65, 0.2))
 plt.show()
 # pdfname = 'E:\\Docteral Doc\\paper4\\initial_imperfection\\Initial defomation plate.pdf'
 # pdffile.savefig(fig)
