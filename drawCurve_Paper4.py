@@ -16,13 +16,13 @@ import subprocess
 
 """
 Input files:
-・インプットファイル(初期変形を導入したいモデルの.inpファイル)
-・解析結果csvファイル(溶接終了時のフィールド出力レポート Can be generated directly in abaqus)
+・Input file (.inp file of the model to which you want to introduce initial deformation)
+・Analysis result csv file(Can be generated directly in Abaqus: Report → Field Output)
 Output files:
 ・Adjusted model's inp file
-・edges figures
+・edges figures (pdf)
 """
-plate_b = 300
+plate_b = 900
 
 
 def SelectFile():
@@ -32,7 +32,7 @@ def SelectFile():
         iFilePath2 = filedialog.askopenfilename(filetype=fTyp, initialdir=iFile)
         entry2.set(iFilePath2)
 
-    # 実行ボタン押下時の実行関数
+    # Function to be executed when the execute button is pressed
     def conductMain():
         global filepath
         anlPath = entry2.get()
@@ -40,11 +40,11 @@ def SelectFile():
             filepath = (anlPath)
             root.quit()
         else:
-            messagebox.showerror("error", "パスの指定がありません")
+            messagebox.showerror("error", "No path setting")
             sys.exit()
 
     root = Tk()
-    root.title("ファイル参照")
+    root.title("File References")
 
     # Frame2
     frame2 = ttk.Frame(root, padding=10)
@@ -54,17 +54,17 @@ def SelectFile():
     entry2 = StringVar()
     anlEntry = ttk.Entry(frame2, textvariable=entry2, width=30)
     anlEntry.pack(side=LEFT)
-    anlButton = ttk.Button(frame2, text="参照", command=anldialog_clicked)
+    anlButton = ttk.Button(frame2, text="Reference", command=anldialog_clicked)
     anlButton.pack(side=LEFT)
 
     # Frame3
     frame3 = ttk.Frame(root, padding=10)
     frame3.grid(row=7, column=1, sticky=W)
-    # 実行ボタンの設置
+    # execute button setting
     button1 = ttk.Button(frame3, text="Execute", command=conductMain)
     button1.pack(fill="x", padx=30, side="left")
-    # キャンセルボタンの設置
-    button2 = ttk.Button(frame3, text=("Close"), command=sys.exit)
+    # Cancel button setting
+    button2 = ttk.Button(frame3, text="Close", command=sys.exit)
     button2.pack(fill="x", padx=30, side="left")
     root.mainloop()
 
@@ -92,8 +92,8 @@ def edge_def_draw(a_df, edgename, pdffile):
         plt.grid(axis="x")
         plt.xlabel("x (mm)", size="large")
         plt.ylabel("Deformation (mm)", size="large")
-        plt.xlim(0, 160.0)
-        plt.ylim(0, 3.0)
+        plt.xlim(0, 500.0)
+        plt.ylim(0, 8.0)
         plt.legend(title=edgename + f' ({len(a_df)}nodes)')
         pdffile.savefig(fig)
     else:
@@ -104,8 +104,8 @@ def edge_def_draw(a_df, edgename, pdffile):
         plt.grid(axis="x")
         plt.xlabel("y (mm)", size="large")
         plt.ylabel("Deformation (mm)", size="large")
-        plt.xlim(0, 160.0)
-        plt.ylim(0, 3.0)
+        plt.xlim(0, 500.0)
+        plt.ylim(0, 8.0)
         plt.legend(title=edgename + f' ({len(a_df)}nodes)')
         pdffile.savefig(fig)
     return None
@@ -142,14 +142,12 @@ if __name__ == "__main__":
     dfplate_edgeX = a_df.query('Y == @plate_b/2')
     dfplate_edgeY = a_df.query('X == @plate_b/2')
 
-
     dfplate_edgeX = dfplate_edgeX.loc[:, ['label', 'X', 'Y', 'analysis', 'sinWave']]
     dfplate_edgeY = dfplate_edgeY.loc[:, ['label', 'X', 'Y', 'analysis', 'sinWave']]
 
-
     # draw edges figures
     # pdfname = 'E:\\Docteral Doc\\paper4\\initial_imperfection\\Initial deformation plate.pdf'
-    pdfname = 'C:\\Users\\cheng\\Desktop\\Docteral Doc\\paper4\\initial_imperfection\\050\\ID_figure.pdf'
+    pdfname = 'C:\\Users\\cheng\\Desktop\\Docteral Doc\\paper4\\initial_imperfection\\150\\ID_ID_ID_150figure.pdf'
     pp = PdfPages(pdfname)
     edgeX = edge_def_draw(a_df=dfplate_edgeX, edgename='X plus direction', pdffile=pp)
     edgeY = edge_def_draw(a_df=dfplate_edgeY, edgename='Y plus direction', pdffile=pp)
