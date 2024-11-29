@@ -19,11 +19,11 @@ Input files:
 ・Input file (.inp file of the model to which you want to introduce initial deformation)
 ・Analysis result csv file(Can be generated directly in Abaqus: Report → Field Output)
 Output files:
-・Adjusted model's inp file
 ・edges figures (pdf)
 """
-plate_b = 900
 
+
+plate_b = 900
 
 def SelectFile():
     def anldialog_clicked():
