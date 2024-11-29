@@ -14,11 +14,10 @@ from tkinter import messagebox
 from tkinter import filedialog
 import subprocess
 import math
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 定义函数，这里是你具体的曲线公式
+
 def euler_curve(R):
     return np.where(R <= 1.0, 1.0, 1 / R**2)
 
@@ -51,11 +50,11 @@ def elasticPlasticFiniteDeformation(R): #弹塑性有限变位理论
             )))
     return result
 
-
+# Analysis result
 def analysisScatter_and_fit_curve(color, label_points, label_fit):
     # Data points for scatter
-    x_points = np.array([0.25, 0.5, 0.75, 1, 1.25, 1.5])
-    y_points = np.array([1.327690632, 0.939931009, 0.723741225, 0.604004176, 0.526395788, 0.468868918])
+    x_points = np.array([0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.0]) # Confidential Data
+    y_points = np.array([1.0, 0.9, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2])
 
     # Polynomial fitting (degree 3)
     poly_coefficients = np.polyfit(x_points, y_points, deg=3)
