@@ -1,5 +1,5 @@
 """
-The intention of this script is to adjust the initial imperfection of a solo plate.
+The intention of this script is to adjust the initial imperfection of a solo plate - 4-simply support case 1.
 Created by Y. CHENG in August 2024.
 """
 import pandas as pd
@@ -23,7 +23,7 @@ Output files:
 """
 
 
-plate_b = 1050
+plate_b = 1200
 
 def SelectFile():
 # Displaying a file dialog
@@ -111,8 +111,8 @@ def edge_def_draw(a_df,edgename,pdffile):
         plt.grid(axis="x")
         plt.xlabel("x (mm)", size = "large")
         plt.ylabel("Deformation (mm)", size = "large")
-        plt.xlim(0, 800.0)
-        plt.ylim(-0.5, 8.0)
+        plt.xlim(0, 600.0)
+        plt.ylim(-0.5, 10.0)
         num_nodes = len(dfplate_edgeX)
         plt.legend(title=edgename + f' ({num_nodes } nodes)')
         pdffile.savefig(fig)
@@ -123,8 +123,8 @@ def edge_def_draw(a_df,edgename,pdffile):
         plt.grid(axis="x")
         plt.xlabel("y (mm)", size = "large")
         plt.ylabel("Deformation (mm)", size = "large")
-        plt.xlim(0, 800.0)
-        plt.ylim(-0.5, 8.0)
+        plt.xlim(0, 600.0)
+        plt.ylim(-0.5, 10.0)
         num_nodes = len(dfplate_edgeY)
         plt.legend(title=edgename + f' ({num_nodes } nodes)')
         pdffile.savefig(fig)
@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
     # draw edges figures
     # pdfname = 'E:\\Docteral Doc\\paper4\\initial_imperfection\\Initial deformation plate.pdf'
-    pdfname = 'C:\\Users\\cheng\\Desktop\\Docteral Doc\\paper4\\initial_imperfection\\175\\ID_175ShellModel.pdf'
+    pdfname = 'C:\\Users\\cheng\\Desktop\\Docteral Doc\\paper4\\initial_imperfection\\200\\ID_ID_200ShellModel.pdf'
     pp = PdfPages(pdfname)
     edgeX = edge_def_draw(a_df=dfplate_edgeX, edgename='X plus direction', pdffile=pp)
     edgeY = edge_def_draw(a_df=dfplate_edgeY, edgename='Y plus direction', pdffile=pp)

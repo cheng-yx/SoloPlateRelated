@@ -1,5 +1,5 @@
 """
-The intention of this script is to adjust the initial imperfection of a solo plate.
+The intention of this script is to adjust the initial imperfection of a solo plate - 4-simply support case 1.
 Created by Y. CHENG in August 2024.
 """
 import pandas as pd
