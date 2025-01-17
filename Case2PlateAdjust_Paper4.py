@@ -94,8 +94,9 @@ def sinWave_change(df):
     # initial imperfection
     # w0 (x, y) = alpha0 * w0max * (sin (pi/b) * x ) * (sin (pi/b) * y )
     global plate_b
+    global plate_l
     w0max = plate_b / 100 # guideline page45 = plate_b / 40
-    return plate_b / 100 * np.sin(np.pi * df.loc[:,'Y'] / plate_b) * (df.loc[:,'X'] / plate_b)
+    return w0max * np.sin(np.pi * df.loc[:,'Y'] / plate_l) * (df.loc[:,'X'] / plate_b)
 
 
 def edge_def_draw(a_df,edgename,pdffile):
