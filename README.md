@@ -1,5 +1,7 @@
 # SoloPlateRelated
 In order to check the initial imperfection, follow the order to use the script to batch adjust and visualize the coordinates.
+For the details, see https://doi.org/10.1016/j.tws.2024.112314 Chapter 3.3
+
 
 For instance (4-simply support plate case 1)：
 1. Using 'Case1PlateAdjust_Paper4.py' to complete the first adjustment.
